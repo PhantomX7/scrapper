@@ -47,10 +47,14 @@ export async function startWhatsappPair(): Promise<PairStartResult> {
     }
 
     const login = await deviceLogin(session.deviceId)
+    // The QR link points to the internal Docker service (e.g.
+    // http://whatsapp:2777/...) which the browser can't reach. Rewrite it
+    // to go through our own proxy route so the image loads correctly.
+    const proxiedQrLink = `/api/whatsapp-qr?url=${encodeURIComponent(login.qr_link)}`
     return {
       ok: true,
       deviceId: session.deviceId,
-      qrLink: login.qr_link,
+      qrLink: proxiedQrLink,
       qrDuration: login.qr_duration,
     }
   } catch (err) {

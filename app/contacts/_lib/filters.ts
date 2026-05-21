@@ -59,7 +59,7 @@ export function parseContactsFilters(get: GetParam): ContactsFilterValues {
   const dateFromDate = parseLocalDate(dateFrom, 'start')
   const dateToDate = parseLocalDate(dateTo, 'end')
 
-  const kw = (get('kw') ?? '').trim()
+  const kw = (get('kw') ?? 'Preview I').trim()
   const keywords = kw
     .split(',')
     .map((s) => s.trim())
