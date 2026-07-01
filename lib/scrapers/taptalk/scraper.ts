@@ -26,7 +26,7 @@ const LOGIN_URL = 'https://onetalk.taptalk.io/login'
 // OneTalk-specific anchors.
 // Prefer text-based selectors where available — they survive DOM reshuffles that break xpath.
 const SEARCH_TAB_SELECTOR = '.side-panel-account-button:has-text("Search")'
-const DATE_FILTER_XPATH = '//*[@id="root"]/div/div[4]/div[1]/div[2]/div[1]/div[1]/div[2]/div[2]'
+const DATE_FILTER_SELECTOR = '.room-list-global-search-header-bottom .case-room-filter-tag-badge:has-text("All Dates")'
 const APPLY_BTN_XPATH = '/html/body/div[2]/div/div[1]/div/div/div[2]/button[3]'
 
 function storageStatePath(ctx: ScrapeContext): string {
@@ -229,7 +229,7 @@ async function openSearchAndApplyDateFilter(
 
   log('info', 'Opening date filter…')
   try {
-    await page.locator(`xpath=${DATE_FILTER_XPATH}`).click({ timeout: 15_000 })
+    await page.locator(DATE_FILTER_SELECTOR).click({ timeout: 15_000 })
   } catch (err) {
     await onStage('before-date-filter-click')
     throw new Error(`Date filter button click failed: ${(err as Error).message}`)
